@@ -1,0 +1,54 @@
+step - maps a unit of time in the real world. In this case 1 step is 1 hour of time. Total steps 744 (30 days simulation).
+
+type - CASH-IN, CASH-OUT, DEBIT, PAYMENT and TRANSFER.
+
+amount - amount of the transaction in local currency.
+
+nameOrig - customer who started the transaction
+
+oldbalanceOrg - initial balance before the transaction
+
+newbalanceOrig - new balance after the transaction
+
+nameDest - customer who is the recipient of the transaction
+
+oldbalanceDest - initial balance recipient before the transaction. Note that there is not information for customers that start with M (Merchants).
+
+newbalanceDest - new balance recipient after the transaction. Note that there is not information for customers that start with M (Merchants).
+
+isFraud - This is the transactions made by the fraudulent agents inside the simulation. In this specific dataset the fraudulent behavior of the agents aims to profit by taking control or customers accounts and try to empty the funds by transferring to another account and then cashing out of the system.
+
+isFlaggedFraud - The business model aims to control massive transfers from one account to another and flags illegal attempts. An illegal attempt in this dataset is an attempt to transfer more than 200.000 in a single transaction.
+
+
+
+
+Feature Engineered Variables:
+
+amount_ratio – This variable represents the proportion of funds transferred relative to the origin account’s available balance. Values close to one indicate attempts to drain the account, a behavior commonly associated with fraudulent transactions.
+
+balance_diff_orig – This variable captures the reduction in the origin account balance resulting from a transaction. Large drops often indicate high-risk or potentially fraudulent activity.
+
+balance_diff_dest – This variable measures the increase in the destination account balance following a transaction, reflecting the amount of funds received.
+
+origin_balance_error – This variable quantifies inconsistencies between the expected and observed balance updates for the origin account. Such discrepancies may arise from abnormal or manipulated transactions.
+
+dest_balance_error – This variable captures inconsistencies in the destination account’s balance update, indicating irregular fund transfers or accounting anomalies.
+
+is_zero_balance_after – This indicator variable identifies whether the origin account’s balance becomes zero after the transaction. In this dataset, fraudulent transactions frequently result in complete depletion of the origin account’s funds.
+
+is_merchant_dest – This binary variable indicates whether the destination account is classified as a merchant. Merchant accounts typically follow different transaction rules and are rarely targeted in fraudulent activity.
+
+is_merchant_orig – This binary variable identifies whether the origin account is a merchant. Transactions originating from merchant accounts generally exhibit lower fraud risk due to stricter controls.
+
+orig_txn_count – This variable records the total number of transactions initiated by the origin account. Unusually high or low activity levels may signal abnormal behavior.
+
+dest_txn_count – This variable represents the number of transactions received by the destination account. Elevated values can indicate aggregation of funds from multiple sources, a potential fraud pattern.
+
+orig_avg_amount – This variable captures the average transaction amount historically sent by the origin account. Deviations from this average may indicate suspicious behavior.
+
+dest_avg_amount – This variable represents the average amount historically received by the destination account, providing context for evaluating incoming transaction anomalies.
+
+amount_deviation_orig – This variable measures the deviation of the current transaction amount from the origin account’s typical transaction size. Large deviations may reflect atypical or fraudulent behavior.
+
+cat_nameDest – This categorical variable classifies the destination account as either a customer (C) or a merchant (M).
